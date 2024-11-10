@@ -1,3 +1,10 @@
+name: Publish to GH Pages
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -33,4 +40,4 @@ jobs:
           git config user.name 'rohnson1999'
           git config user.email 'hrs.199921@gmail.com'
           git commit -m 'Updated site'
-          git push
+          git push          
