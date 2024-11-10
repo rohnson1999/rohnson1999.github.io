@@ -2,6 +2,12 @@
 date: '2024-11-10T13:55:21+08:00'
 draft: false
 title: '使用Hugo部署你的博客'
+tags: ["开发"]
+params:
+  ShowCodeCopyButtons: true
+  ShowReadingTime: true
+  ShowToc: true
+  ShowBreadCrumbs: true
 ---
 
 ## 简介
