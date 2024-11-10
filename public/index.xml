@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>rohnson&#39;s blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on rohnson&#39;s blog</description>
+    <generator>Hugo -- 0.137.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Nov 2024 13:55:21 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用Hugo部署你的博客</title>
+      <link>http://localhost:1313/docs/test/</link>
+      <pubDate>Sun, 10 Nov 2024 13:55:21 +0800</pubDate>
+      <guid>http://localhost:1313/docs/test/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+&lt;p&gt;Hugo是一个静态网站生成器，它可以帮助你快速搭建一个博客。本文将介绍如何在Windows11系统下，使用Hugo部署你的博客，并将博客部署到GitHub Pages上。&lt;/p&gt;
+&lt;h2 id=&#34;准备工作&#34;&gt;准备工作&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;确保在Windows11中安装PowerShell，如果没有安装，可以使用winget进行安装：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;winget install --id Microsoft.PowerShell --source winget
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;【注意】PowerShell与Windows PowerShell不同，Windows PowerShell是Windows系统自带的命令行工具，而PowerShell是一个开源的跨平台命令行工具，可以在Windows、Linux、macOS上运行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确保你的电脑上已经安装了Git，如果没有安装，点击&lt;a href=&#34;https://git-scm.com/downloads/win&#34;&gt;这里&lt;/a&gt;进行安装&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确保你的电脑上已经安装了Hugo，如果没有安装，可以参考&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo官网&lt;/a&gt;进行安装&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装完成后，在任意地址中，使用下面的命令创建一个新的Hugo网站：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd /path/to/your/folder
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new site MyFreshWebsite --format yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace MyFreshWebsite with name of your website&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;安装hugo主题&#34;&gt;安装Hugo主题&lt;/h2&gt;
+&lt;p&gt;Hugo有很多主题可以选择，你可以在&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;Hugo官网&lt;/a&gt;上找到你喜欢的主题。这里我们以&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;hugo-PaperMod&lt;/a&gt;为例，介绍如何安装主题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;推荐使用Git Submodule的方式安装主题，这样可以方便的更新主题。在终端中执行以下命令，将&lt;code&gt;PaperMod&lt;/code&gt;主题添加为Git Submodule：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd /path/to/your/folder/MyFreshWebsite
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add --depth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule update --init --recursive &lt;span style=&#34;color:#75715e&#34;&gt;# needed when you reclone your repo (submodules may not get cloned automatically)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule update --remote --merge &lt;span style=&#34;color:#75715e&#34;&gt;# update the theme&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改&lt;code&gt;config.yaml&lt;/code&gt;文件，将主题设置为&lt;code&gt;PaperMod&lt;/code&gt;：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
