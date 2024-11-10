@@ -1,10 +1,3 @@
-name: Publish to GH Pages
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,6 +21,9 @@ jobs:
       - name: Build
         run: ${RUNNER_TEMP}/hugo
 
+      - name: Create .nojekyll file
+        run: touch built-site/.nojekyll
+
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         run: |
@@ -37,4 +33,4 @@ jobs:
           git config user.name 'rohnson1999'
           git config user.email 'hrs.199921@gmail.com'
           git commit -m 'Updated site'
-          git push          
+          git push
