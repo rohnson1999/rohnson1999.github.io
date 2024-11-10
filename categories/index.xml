@@ -4,6 +4,11 @@
     <title>Categories on rohnson&#39;s blog</title>
     <link>https://rohnson1999.github.io/categories/</link>
     <description>Recent content in Categories on rohnson&#39;s blog</description>
+    <image>
+      <title>rohnson&#39;s blog</title>
+      <url>https://rohnson1999.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://rohnson1999.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
     <generator>Hugo -- 0.138.0</generator>
     <language>en-us</language>
     <atom:link href="https://rohnson1999.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
