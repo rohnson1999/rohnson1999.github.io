@@ -43,6 +43,11 @@ params:
   showtoc: false
   tocopen: false
 
+  favicon: "/favicon.ico"
+  favicon16x16: "/favicon-16x16.png"
+  favicon32x32: "/favicon-16x16.png"
+  apple_touch_icon: "/apple-touch-icon.png"
+
   label:
     text: "rohnson's blog"
     icon: 'favicon.ico'
