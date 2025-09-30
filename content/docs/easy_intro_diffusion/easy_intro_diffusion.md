@@ -16,11 +16,11 @@ params:
 
 ## 什么是Diffusion模型？
 
-![太空歌剧院](/content/docs/img/intro_diffusion/Théâtre%20D'opéra%20Spatial.png "太空歌剧院")
+![太空歌剧院](images/Théâtre%20D'opéra%20Spatial.png#center "太空歌剧院")
 
 2022 年，在科罗拉多州博览会的艺术比赛中，一项开创性的参赛作品挑战了艺术创作的传统界限。Jason M. Allen 的杰作《太空歌剧院》（Théâtre D'opéra Spatial）赢得了头奖，并打破了常规。它并非通过传统方式，而是借助了一个名为 Midjourney 的 AI 程序，该程序使用扩散模型来生成图像。通过将文本提示转化为超写实图像，Allen 的创作不仅吸引了观众和评委，也引发了艺术家的强烈反对，他们指责他本质上是在作弊。
 
-![墨水在水中扩散](/content/docs/img/intro_diffusion/ink_diffusion_in_water.jpg "墨水在水中扩散")
+![墨水在水中扩散](images/ink_diffusion_in_water.jpg#center "墨水在水中扩散")
 
 在物理学中，扩散是指溶质粒子从溶质浓度较高的区域移动到溶质浓度较低的区域的过程。上图描述的是传统的扩散过程，将墨滴滴入干净的水杯中，一段时间后，墨滴完全扩散。现实生活中，逆转上述过程是不可能的（从混合物中取出墨滴）。但在扩散模型中正是这样做的，即去除噪声，从而生成清晰的图像。
 
@@ -30,7 +30,7 @@ params:
 
 ### 前向扩散过程(人为破坏数据)
 
-![前向扩散过程](/content/docs/img/intro_diffusion/foward_diffusion.jpg "前向扩散过程")
+![前向扩散过程](images/foward_diffusion.jpg#center "前向扩散过程")
 
 如图所示，从左到右，前向扩散过程逐步向图像添加噪声，直到图像变得完全不可识别。
 
@@ -39,7 +39,7 @@ params:
 
 ### 反向扩散过程(学习重建数据)
 
-![反向扩散过程](/content/docs/img/intro_diffusion/reverse_diffusion.png "反向扩散过程")
+![反向扩散过程](images/reverse_diffusion.png#center "反向扩散过程")
 
 扩散模型的反向过程，就像一位专家面对一帧帧被雪花覆盖的名画，每看一帧就更准确地判断“哪些雪花是后加的”，并按科学比例逐步擦除 —— 最终，从纯噪声中还原出清晰原图。
 
@@ -49,7 +49,7 @@ params:
 
 因为模型预测的噪声是“近似”的，不是完美的。一步减掉全部预测噪声会导致图像失真或崩溃；逐步去噪让错误可以被“修正”，过程更稳定、质量更高。
 
-![一步到位实验](/content/docs/img/intro_diffusion/why_not_one_step.png "一步到位实验")
+![一步到位实验](images/why_not_one_step.png#center "一步到位实验")
 
 如上图所示，在时间步 t 的输入图像（中间列）上，若直接“一步到位”减去模型预测的完整噪声（右列），将得到对应（左列）的一步复原结果。
 
@@ -59,7 +59,7 @@ params:
 
 ### 扩散模型（Diffusion Model）的应用----文生图模型
 
-![文生图模型](/content/docs/img/intro_diffusion/unCLIP.png "文生图模型")
+![文生图模型](images/unCLIP.png#center "文生图模型")
 
 扩散模型的一个重要应用是文本生成图像（Text-to-Image）。如上图所示，是OpenAI的unCLIP模型架构（又称为DALL·E 2）。它结合了CLIP模型和扩散模型，能够根据文本描述生成高质量图像。在训练阶段，CLIP模型学习将文本和图像映射到同一潜在空间，而扩散模型则学习从噪声中生成图像。在生成阶段，用户输入文本描述，CLIP模型生成对应的图像嵌入，然后扩散模型从噪声开始，逐步生成符合文本描述的图像。
 
