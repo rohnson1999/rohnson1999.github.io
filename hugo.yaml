@@ -2,7 +2,8 @@ baseURL: "https://rohnson1999.github.io/"
 languageCode: en-us
 title: rohnson's blog
 theme: PaperMod
-paginate: 5 # Number of posts to show in a list page.
+pagination:
+  pagerSize: 10
 
 enableRobotsTXT: true # to enable robots.txt
 buildDrafts: false  # to build drafts
@@ -22,7 +23,7 @@ params:
   keywords: [Blog, Portfolio, PaperMod]
   author: rohnson
   # author: ["Me", "You"] # multiple authors
-  images: ["<link or path of image for opengraph, twitter-cards>"]  
+  # images: ["<link or path of image for opengraph, twitter-cards>"]  
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
@@ -70,8 +71,8 @@ params:
 
   # home-info mode
   homeInfoParams:
-    Title: "Welcome to rohnson's blog 🍋"
-    Content: I'm currently a Phd student. I focus on R&D of small LLM techniques and Multi-modal LLM. I love analog photography, use Nikon FE2, Contax G1/G45 and PRIMOFLEX 120.
+    Title: "Welcome to rohnson's blog"
+    Content: I'm currently a Phd student. I focus on MLLM and Context Engineering.
 
   socialIcons:
     - name: bilibili
