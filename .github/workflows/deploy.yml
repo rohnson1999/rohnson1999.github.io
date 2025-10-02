@@ -12,7 +12,14 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: true
+
+      - name: Checkout destination
+        uses: actions/checkout@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          ref: gh-pages
+          path: built-site
 
       - name: Setup Hugo
         run: |
@@ -26,13 +33,12 @@ jobs:
         run: touch public/.nojekyll
 
       - name: Deploy to gh-pages
+        if: github.ref == 'refs/heads/main'
         run: |
-          git init
-          git checkout --orphan gh-pages
-          git reset --hard
-          cp -R public/* .
+          cp -R public/* ${GITHUB_WORKSPACE}/built-site/
+          cd ${GITHUB_WORKSPACE}/built-site
           git add .
           git config user.name 'rohnson1999'
           git config user.email 'hrs.199921@gmail.com'
-          git commit -m 'Deploy to gh-pages'
-          git push --force origin gh-pages
+          git commit -m 'Updated site'
+          git push 
