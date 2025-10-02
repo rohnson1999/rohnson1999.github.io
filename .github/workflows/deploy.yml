@@ -14,30 +14,25 @@ jobs:
         with:
           submodules: true
 
-      - name: Checkout destination
-        uses: actions/checkout@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          ref: gh-pages
-          path: built-site
-
       - name: Setup Hugo
         run: |
           curl -L -o /tmp/hugo.tar.gz 'https://github.com/gohugoio/hugo/releases/download/v0.150.1/hugo_0.150.1_linux-amd64.tar.gz'
           tar -C ${RUNNER_TEMP} -zxvf /tmp/hugo.tar.gz hugo          
+
       - name: Build
-        run: ${RUNNER_TEMP}/hugo
+        run: ${RUNNER_TEMP}/hugo --minify --cleanDestinationDir
 
       - name: Create .nojekyll file
-        run: touch built-site/.nojekyll
+        run: touch public/.nojekyll
 
-      - name: Deploy
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy to gh-pages
         run: |
-          cp -R public/* ${GITHUB_WORKSPACE}/built-site/
-          cd ${GITHUB_WORKSPACE}/built-site
+          git init
+          git checkout --orphan gh-pages
+          git reset --hard
+          cp -R public/* .
           git add .
           git config user.name 'rohnson1999'
           git config user.email 'hrs.199921@gmail.com'
-          git commit -m 'Updated site'
-          git push          
+          git commit -m 'Deploy to gh-pages'
+          git push --force origin gh-pages
