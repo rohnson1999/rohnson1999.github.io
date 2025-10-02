@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>rohnson&#39;s blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on rohnson&#39;s blog</description>
+    <generator>Hugo -- 0.150.1</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 30 Sep 2025 15:37:49 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Diffusion模型的简单介绍</title>
+      <link>http://localhost:1313/docs/easy_intro_diffusion/</link>
+      <pubDate>Tue, 30 Sep 2025 15:37:49 +0800</pubDate>
+      <guid>http://localhost:1313/docs/easy_intro_diffusion/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+&lt;p&gt;最近在学习Diffusion模型，其中一个环节是尝试使用最简单的语言描述Diffusion模型的工作原理。本文将介绍Diffusion模型的基本概念和工作流程，并简要探讨其设计思路。&lt;/p&gt;
+&lt;h2 id=&#34;什么是diffusion模型&#34;&gt;什么是Diffusion模型？&lt;/h2&gt;
+&lt;p&gt;&lt;img alt=&#34;太空歌剧院&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/Th%C3%A9%C3%A2tre%20D%27op%C3%A9ra%20Spatial.png#center&#34; title=&#34;太空歌剧院&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2022 年，在科罗拉多州博览会的艺术比赛中，一项开创性的参赛作品挑战了艺术创作的传统界限。Jason M. Allen 的杰作《太空歌剧院》（Théâtre D&amp;rsquo;opéra Spatial）赢得了头奖，并打破了常规。它并非通过传统方式，而是借助了一个名为 Midjourney 的 AI 程序，该程序使用扩散模型来生成图像。通过将文本提示转化为超写实图像，Allen 的创作不仅吸引了观众和评委，也引发了艺术家的强烈反对，他们指责他本质上是在作弊。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;墨水在水中扩散&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/ink_diffusion_in_water.jpg#center&#34; title=&#34;墨水在水中扩散&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在物理学中，扩散是指溶质粒子从溶质浓度较高的区域移动到溶质浓度较低的区域的过程。上图描述的是传统的扩散过程，将墨滴滴入干净的水杯中，一段时间后，墨滴完全扩散。现实生活中，逆转上述过程是不可能的（从混合物中取出墨滴）。但在扩散模型中正是这样做的，即去除噪声，从而生成清晰的图像。&lt;/p&gt;
+&lt;h2 id=&#34;diffusion模型的工作原理&#34;&gt;Diffusion模型的工作原理&lt;/h2&gt;
+&lt;p&gt;扩散模型通过添加高斯噪声（称为前向扩散过程）来破坏训练数据，然后通过逐步逆转这个加噪过程（称为反向扩散过程）来学习如何恢复原始信息（用一个简单的噪声预测任务，教会模型复杂的数据生成能力）。&lt;/p&gt;
+&lt;h3 id=&#34;前向扩散过程人为破坏数据&#34;&gt;前向扩散过程(人为破坏数据)&lt;/h3&gt;
+&lt;p&gt;&lt;img alt=&#34;前向扩散过程&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/foward_diffusion.jpg#center&#34; title=&#34;前向扩散过程&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如图所示，从左到右，前向扩散过程逐步向图像添加噪声，直到图像变得完全不可识别。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第1步：轻微模糊→… →第25步：中度模糊，房屋尚可分辨→… →第35步：高度模糊，只剩轮廓&lt;/li&gt;
+&lt;li&gt;第50步：几乎纯噪声，看不出原图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;反向扩散过程学习重建数据&#34;&gt;反向扩散过程(学习重建数据)&lt;/h3&gt;
+&lt;p&gt;&lt;img alt=&#34;反向扩散过程&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/reverse_diffusion.png#center&#34; title=&#34;反向扩散过程&#34;&gt;&lt;/p&gt;
+&lt;p&gt;扩散模型的反向过程，就像一位专家面对一帧帧被雪花覆盖的名画，每看一帧就更准确地判断“哪些雪花是后加的”，并按科学比例逐步擦除 —— 最终，从纯噪声中还原出清晰原图。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;很多人在学习Diffusion模型时，容易误解为“模型逐步去除了噪声”，其实更准确的说法是“模型逐步预测并移除了噪声”。这里的区别在于，每一次去噪，模型都在预测当前图像中“哪些部分是噪声”，然后将这些预测的噪声按照一定比例移除。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;为什么噪声是逐步有控制地移除而不是一步到位&#34;&gt;为什么噪声是&amp;quot;逐步、有控制地移除&amp;quot;，而不是&amp;quot;一步到位&amp;quot;？&lt;/h3&gt;
+&lt;p&gt;因为模型预测的噪声是“近似”的，不是完美的。一步减掉全部预测噪声会导致图像失真或崩溃；逐步去噪让错误可以被“修正”，过程更稳定、质量更高。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;一步到位实验&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/why_not_one_step.png#center&#34; title=&#34;一步到位实验&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如上图所示，在时间步 t 的输入图像（中间列）上，若直接“一步到位”减去模型预测的完整噪声（右列），将得到对应（左列）的一步复原结果。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当 t = 50（或更大值）时，图像仍含较多噪声，模型预测存在误差，若强行一步去噪，结果往往模糊或失真 —— 此时必须依赖逐步、有调度控制的去噪过程，才能稳定恢复高质量图像。&lt;/li&gt;
+&lt;li&gt;当 t = 1 时，图像已接近干净，模型预测噪声较准确，一步复原效果尚可，与完整多步生成结果较为接近。&lt;/li&gt;
+&lt;li&gt;说明：一步去噪仅用于示意模型“预测完整噪声”的能力，并不用于实际生成流程。真实采样中，每一步仅移除部分预测噪声，确保过程稳定、结构可控。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;扩散模型diffusion-model的应用-文生图模型&#34;&gt;扩散模型（Diffusion Model）的应用&amp;mdash;-文生图模型&lt;/h3&gt;
+&lt;p&gt;&lt;img alt=&#34;文生图模型&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/docs/easy_intro_diffusion/images/unCLIP.png#center&#34; title=&#34;文生图模型&#34;&gt;&lt;/p&gt;
+&lt;p&gt;扩散模型的一个重要应用是文本生成图像（Text-to-Image）。如上图所示，是OpenAI的unCLIP模型架构（又称为DALL·E 2）。它结合了CLIP模型和扩散模型，能够根据文本描述生成高质量图像。在训练阶段，CLIP模型学习将文本和图像映射到同一潜在空间，而扩散模型则学习从噪声中生成图像。在生成阶段，用户输入文本描述，CLIP模型生成对应的图像嵌入，然后扩散模型从噪声开始，逐步生成符合文本描述的图像。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;扩散模型通过模拟数据的逐步破坏和恢复过程，展示了强大的生成能力。其核心思想是通过添加噪声来破坏数据，然后学习如何逐步去除噪声以恢复原始信息。这种方法不仅在图像生成领域取得了显著成果，还为其他生成任务提供了新的思路。随着技术的不断发展，扩散模型有望在更多领域展现其潜力，推动生成式AI的发展。&lt;/p&gt;
+&lt;h2 id=&#34;参考资料&#34;&gt;参考资料&lt;/h2&gt;
+&lt;p&gt;[1] Kemal Erdem, (Nov 2023). &amp;ldquo;Step by Step visual introduction to Diffusion Models.&amp;quot;. &lt;code&gt;https://erdem.pl/2023/11/step-by-step-visual-introduction-to-diffusion-models&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>使用Hugo部署你的博客</title>
+      <link>http://localhost:1313/docs/blog_tut/</link>
+      <pubDate>Sun, 10 Nov 2024 13:55:21 +0800</pubDate>
+      <guid>http://localhost:1313/docs/blog_tut/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+&lt;p&gt;Hugo是一个静态网站生成器，它可以帮助你快速搭建一个博客。本文将介绍如何在Windows11系统下，使用Hugo部署你的博客，并将博客部署到GitHub Pages上。&lt;/p&gt;
+&lt;h2 id=&#34;准备工作&#34;&gt;准备工作&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;确保在Windows11中安装PowerShell，如果没有安装，可以使用winget进行安装：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;winget install --id Microsoft.PowerShell --source winget
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;【注意】PowerShell与Windows PowerShell不同，Windows PowerShell是Windows系统自带的命令行工具，而PowerShell是一个开源的跨平台命令行工具，可以在Windows、Linux、macOS上运行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确保你的电脑上已经安装了Git，如果没有安装，点击&lt;a href=&#34;https://git-scm.com/downloads/win&#34;&gt;这里&lt;/a&gt;进行安装&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确保你的电脑上已经安装了Hugo，如果没有安装，可以参考&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo官网&lt;/a&gt;进行安装&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装完成后，在任意地址中，使用下面的命令创建一个新的Hugo网站：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /path/to/your/folder
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo new site MyFreshWebsite --format yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# replace MyFreshWebsite with name of your website&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;安装hugo主题&#34;&gt;安装Hugo主题&lt;/h2&gt;
+&lt;p&gt;Hugo有很多主题可以选择，你可以在&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;Hugo官网&lt;/a&gt;上找到你喜欢的主题。这里我们以&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;hugo-PaperMod&lt;/a&gt;为例，介绍如何安装主题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;推荐使用Git Submodule的方式安装主题，这样可以方便的更新主题。在终端中执行以下命令，将&lt;code&gt;PaperMod&lt;/code&gt;主题添加为Git Submodule：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /path/to/your/folder/MyFreshWebsite
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule add --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule update --init --recursive &lt;span class=&#34;c1&#34;&gt;# needed when you reclone your repo (submodules may not get cloned automatically)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule update --remote --merge &lt;span class=&#34;c1&#34;&gt;# update the theme&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改&lt;code&gt;config.yaml&lt;/code&gt;文件，将主题设置为&lt;code&gt;PaperMod&lt;/code&gt;：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

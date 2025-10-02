@@ -1,6 +1,6 @@
 ---
 date: '2025-09-30T15:37:49+08:00'
-draft: true
+draft: false
 title: 'Diffusion模型的简单介绍'
 tags: ["AI"]
 params:
@@ -69,6 +69,6 @@ params:
 
 ## 参考资料
 
-[1] Kemal Erdem, (Nov 2023). "Step by Step visual introduction to Diffusion Models.". https://erdem.pl/2023/11/step-by-step-visual-introduction-to-diffusion-models
+[1] Kemal Erdem, (Nov 2023). "Step by Step visual introduction to Diffusion Models.". `https://erdem.pl/2023/11/step-by-step-visual-introduction-to-diffusion-models`
 
 [2] Ramesh A, Dhariwal P, Nichol A, et al. Hierarchical text-conditional image generation with clip latents[J]. arXiv preprint arXiv:2204.06125, 2022, 1(2): 3.

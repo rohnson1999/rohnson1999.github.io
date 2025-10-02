@@ -31,13 +31,6 @@ jobs:
       - name: Create .nojekyll file
         run: touch built-site/.nojekyll
 
-      - name: Clean gh-pages branch
-        if: github.ref == 'refs/heads/main'
-        run: |
-          cd ${GITHUB_WORKSPACE}/built-site
-          git rm -rf .
-          git clean -fdx
-
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         run: |
