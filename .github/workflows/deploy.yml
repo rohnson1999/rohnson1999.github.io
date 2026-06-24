@@ -47,5 +47,5 @@ jobs:
             echo "No changes to deploy"
           else
             git commit -m 'Updated site'
-            git push
+            git push origin HEAD:gh-pages
           fi
