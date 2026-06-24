@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to gh-pages
         if: github.ref == 'refs/heads/main'
         run: |
-          rsync -a --delete public/ ${GITHUB_WORKSPACE}/built-site/
+          rsync -a --delete --exclude .git public/ ${GITHUB_WORKSPACE}/built-site/
           cd ${GITHUB_WORKSPACE}/built-site
           git config user.name 'rohnson1999'
           git config user.email 'hrs.199921@gmail.com'
